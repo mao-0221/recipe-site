@@ -1,0 +1,11 @@
+<form th:action="@{/register}" method="post" th:object="${user}">
+    <label>ユーザー名：</label><br>
+    <input type="text" th:field="*{username}"><br>
+
+    <label>パスワード：</label><br>
+    <input type="password" th:field="*{password}"><br><br>
+
+    <div th:if="${error}" th:text="${error}" style="color:red;"></div>
+
+    <button type="submit">登録する</button>
+</form>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>レシピ投稿</title>
+</head>
+<body>
+    <h1>レシピ投稿フォーム</h1>
+
+    <!-- 投稿と編集を自動で切り替える -->
+    <form th:action="@{${recipe.id} != null ? '/edit/' + ${recipe.id} : '/new'}" method="post" th:object="${recipe}">
+        <label>タイトル：</label><br>
+        <input type="text" th:field="*{title}" required><br>
+
+        <label>材料：</label><br>
+        <textarea th:field="*{content}" required></textarea><br>
+		
+		<label>作り方：</label><br>
+		<textarea th:field="*{content}" required></textarea><br>
+
+        <label>評価（1〜5）：</label><br>
+        <input type="number" th:field="*{rating}" min="1" max="5" required><br><br>
+
+        <button type="submit" th:text="${recipe.id != null ? '更新する' : '投稿する'}"></button>
+    </form>
+
+    <a th:href="@{/}">戻る</a>
+</body>
+</html>

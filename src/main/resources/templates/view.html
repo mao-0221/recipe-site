@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>レシピ詳細</title>
+</head>
+<body>
+    <h1 th:text="${recipe.title}">タイトル</h1>
+    <p><strong>説明：</strong> <span th:text="${recipe.description}"></span></p>
+    <p><strong>材料：</strong> <pre th:text="${recipe.ingredients}"></pre></p>
+    <p><strong>作り方：</strong> <pre th:text="${recipe.instructions}"></pre></p>
+    <p><strong>評価：</strong> <span th:text="${recipe.rating}"></span></p>
+    <p>
+        投稿者：
+        <span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span>
+    </p>
+
+    <a th:href="@{/}">戻る</a>
+
+    <div>
+        <h2 th:text="${recipe.title}"></h2>
+        <p th:text="${recipe.content}"></p>
+        <p>評価: <span th:text="${recipe.rating}"></span></p>
+
+        <!-- ログインユーザーが投稿者の場合だけ表示 -->
+        <div th:if="${#httpSession.getAttribute('loginUser')?.id} == ${recipe.user?.id}">
+            <a th:href="@{'/edit/' + ${recipe.id}}">編集</a>
+
+            <form th:action="@{'/delete/' + ${recipe.id}}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
