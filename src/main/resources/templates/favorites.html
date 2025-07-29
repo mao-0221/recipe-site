@@ -1,0 +1,8 @@
+<h1>お気に入りレシピ一覧 🧡</h1>
+<ul>
+  <li th:each="fav : ${favorites}">
+    <a th:href="@{'/view/' + ${fav.recipe.id}}">
+      <span th:text="${fav.recipe.title}">タイトル</span>
+    </a>
+  </li>
+</ul>

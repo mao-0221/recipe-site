@@ -15,12 +15,18 @@
 	<p>レシピ投稿者名: [[${recipe.user.username}]]</p>
 	
 	
-	<!-- 投稿者のみ表示される編集・削除 -->
+	<!-- 編集・削除は自分だけ -->
 	<div th:if="${loginUsername != null and recipe.user != null and loginUsername == recipe.user.username}">
-	    <!-- 編集・削除ボタンなど -->
 	    <a th:href="@{/edit/{id}(id=${recipe.id})}">編集</a>
 	    <a th:href="@{/delete/{id}(id=${recipe.id})}" onclick="return confirm('削除しますか？')">削除</a>
 	</div>
+
+	<!-- 誰でもお気に入り可能 -->
+	<form th:action="@{'/favorite/add/' + ${recipe.id}}" method="post">
+	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	    <button type="submit">お気に入り追加 💖</button>
+	</form>
+	
     <a th:href="@{/}">一覧に戻る</a> 
 	<form th:action="@{/logout}" method="post">
 	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
