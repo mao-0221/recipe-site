@@ -12,11 +12,11 @@
         <label>タイトル：</label><br>
         <input type="text" th:field="*{title}" required><br>
 
-        <label>材料：</label><br>
-        <textarea th:field="*{content}" required></textarea><br>
-		
+		<label>材料：</label><br>
+		<textarea th:field="*{ingredients}" required></textarea><br>
+
 		<label>作り方：</label><br>
-		<textarea th:field="*{content}" required></textarea><br>
+		<textarea th:field="*{instructions}" required></textarea><br>
 
         <label>評価（1〜5）：</label><br>
         <input type="number" th:field="*{rating}" min="1" max="5" required><br><br>

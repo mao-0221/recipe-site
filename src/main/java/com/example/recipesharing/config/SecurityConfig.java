@@ -33,10 +33,10 @@ public class SecurityConfig {
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-            )
+            	    .logoutUrl("/logout")
+            	    .logoutSuccessUrl("/login?logout")
+            	    .permitAll()
+            	)
             .userDetailsService(userDetailsService);  // ← ここを追加
 
         return http.build();
@@ -52,4 +52,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+   
 }

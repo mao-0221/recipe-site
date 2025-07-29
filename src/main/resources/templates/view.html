@@ -2,34 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>レシピ詳細</title>
+    <title th:text="${recipe.title}">レシピ詳細</title>
 </head>
 <body>
     <h1 th:text="${recipe.title}">タイトル</h1>
-    <p><strong>説明：</strong> <span th:text="${recipe.description}"></span></p>
-    <p><strong>材料：</strong> <pre th:text="${recipe.ingredients}"></pre></p>
-    <p><strong>作り方：</strong> <pre th:text="${recipe.instructions}"></pre></p>
-    <p><strong>評価：</strong> <span th:text="${recipe.rating}"></span></p>
-    <p>
-        投稿者：
-        <span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span>
-    </p>
 
-    <a th:href="@{/}">戻る</a>
+    <p><strong>材料：</strong> <pre th:text="${recipe.ingredients}">材料</pre></p>
+    <p><strong>作り方：</strong> <pre th:text="${recipe.instructions}">作り方</pre></p>
+    <p><strong>評価：</strong> <span th:text="${recipe.rating}">評価</span></p>
+    <p><strong>投稿者：</strong> <span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span></p>
+	<p>ログインユーザー名: <span th:text="${loginUsername != null ? loginUsername : '未ログイン'}"></span></p>
+	<p>レシピ投稿者名: [[${recipe.user.username}]]</p>
+	
+	
+	<!-- 投稿者のみ表示される編集・削除 -->
+	<div th:if="${loginUsername != null and recipe.user != null and loginUsername == recipe.user.username}">
+	    <!-- 編集・削除ボタンなど -->
+	    <a th:href="@{/edit/{id}(id=${recipe.id})}">編集</a>
+	    <a th:href="@{/delete/{id}(id=${recipe.id})}" onclick="return confirm('削除しますか？')">削除</a>
+	</div>
+    <a th:href="@{/}">一覧に戻る</a> 
+	<form th:action="@{/logout}" method="post">
+	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	    <button type="submit">ログアウト</button>
+	</form>
 
-    <div>
-        <h2 th:text="${recipe.title}"></h2>
-        <p th:text="${recipe.content}"></p>
-        <p>評価: <span th:text="${recipe.rating}"></span></p>
-
-        <!-- ログインユーザーが投稿者の場合だけ表示 -->
-        <div th:if="${#httpSession.getAttribute('loginUser')?.id} == ${recipe.user?.id}">
-            <a th:href="@{'/edit/' + ${recipe.id}}">編集</a>
-
-            <form th:action="@{'/delete/' + ${recipe.id}}" method="post" style="display:inline;">
-                <button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
-            </form>
-        </div>
-    </div>
 </body>
 </html>

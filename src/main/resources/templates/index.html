@@ -5,24 +5,22 @@
     <title>レシピ一覧</title>
 </head>
 <body>
-    <h1>レシピ一覧</h1>
-
-    <form th:action="@{/search}" method="get">
-        <input type="text" name="keyword" placeholder="キーワード検索">
-        <button type="submit">検索</button>
-    </form>
-
-    <a th:href="@{/new}">新しいレシピを投稿する</a>
+    <h1>みんなのレシピ🍳</h1>
 
 	<ul>
-	    <li th:each="recipe : ${recipes}">
-	        <a th:href="@{'/view/' + ${recipe.id}}" th:text="${recipe.title}"></a>
-	        （評価：<span th:text="${recipe.rating}"></span>）
-	        <br>
-	        投稿者：
-	        <span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span>
-	    </li>
+	  <li th:each="recipe : ${recipes}">
+	    <a th:href="@{'/view/' + ${recipe.id}}">
+	      <strong th:text="${recipe.title}">タイトル</strong>
+	    </a><br>
+	    <span>投稿者：<span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span></span><br>
+	    <span>評価：<span th:text="${recipe.rating}"></span></span>
+	  </li>
 	</ul>
 
+    <p><a th:href="@{/new}">新しいレシピを投稿する</a></p> 
+	<form th:action="@{/logout}" method="post">
+	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	    <button type="submit">ログアウト</button>
+	</form>
 </body>
 </html>

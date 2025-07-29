@@ -64,12 +64,18 @@ public class RecipeController {
 
     // ✅ 詳細表示
     @GetMapping("/view/{id}")
-    public String view(@PathVariable Long id, Model model) {
+    public String view(@PathVariable Long id, Model model,
+                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         Recipe recipe = recipeService.getRecipeById(id);
         model.addAttribute("recipe", recipe);
+
+        if (userDetails != null) {
+            model.addAttribute("loginUsername", userDetails.getUsername());
+        }
+
         return "view";
     }
-
     // 編集フォーム表示（GET）
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id, Model model,
@@ -97,25 +103,29 @@ public class RecipeController {
         }
 
         existing.setTitle(updatedRecipe.getTitle());
-        existing.setContent(updatedRecipe.getContent());
         existing.setRating(updatedRecipe.getRating());
+        existing.setIngredients(updatedRecipe.getIngredients());
+        existing.setInstructions(updatedRecipe.getInstructions());
+
         recipeService.saveRecipe(existing); // 更新
 
         return "redirect:/view/" + id;
     }
 
     // 削除（POST）
-    @PostMapping("/delete/{id}")
+ // ✅ 削除（GET）※安全性確認付き
+    @GetMapping("/delete/{id}")
     public String deleteRecipe(@PathVariable Long id,
                                @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         Recipe recipe = recipeService.getRecipeById(id);
 
-        if (userDetails != null && recipe != null &&
-            recipe.getUser().getId().equals(userDetails.getUser().getId())) {
-            recipeService.deleteRecipe(id);
+        if (userDetails == null || recipe == null || 
+            !recipe.getUser().getId().equals(userDetails.getUser().getId())) {
+            return "redirect:/"; // 不正アクセスは一覧へ
         }
 
-        return "redirect:/";
+        recipeService.deleteRecipe(id); // ← サービス側のメソッド名と合わせました！
+        return "redirect:/"; // 削除後は一覧表示へ
     }
-
 }

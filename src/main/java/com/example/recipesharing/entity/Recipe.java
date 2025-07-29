@@ -15,7 +15,9 @@ public class Recipe {
     private Long id;
 
     private String title;
-    private String content;  // 内容をここに記述
+
+    private String ingredients;   // 材料
+    private String instructions;  // 作り方
     private int rating;
 
     @ManyToOne
@@ -28,8 +30,11 @@ public class Recipe {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
+    public String getIngredients() { return ingredients; }
+    public void setIngredients(String ingredients) { this.ingredients = ingredients; }
+
+    public String getInstructions() { return instructions; }
+    public void setInstructions(String instructions) { this.instructions = instructions; }
 
     public int getRating() { return rating; }
     public void setRating(int rating) { this.rating = rating; }
