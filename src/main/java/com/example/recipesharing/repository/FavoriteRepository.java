@@ -11,4 +11,6 @@ import com.example.recipesharing.entity.User;
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     List<Favorite> findByUser(User user);
     boolean existsByUserAndRecipe(User user, Recipe recipe);
+    
+    Favorite findByUserAndRecipe(User user, Recipe recipe);
 }

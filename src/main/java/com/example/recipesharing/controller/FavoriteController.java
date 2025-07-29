@@ -67,4 +67,17 @@ public class FavoriteController {
         
         return "view";
     }
+    
+    @PostMapping("/remove/{id}")
+    public String removeFavorite(@PathVariable Long id, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+
+        Favorite favorite = favoriteRepository.findByUserAndRecipe(user, recipe);
+        if (favorite != null) {
+            favoriteRepository.delete(favorite);
+        }
+
+        return "redirect:/favorite/view/" + id; // ← お気に入り付きのビューに戻る
+    }
 }
