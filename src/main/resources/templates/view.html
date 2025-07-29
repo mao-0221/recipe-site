@@ -21,11 +21,19 @@
 	    <a th:href="@{/delete/{id}(id=${recipe.id})}" onclick="return confirm('削除しますか？')">削除</a>
 	</div>
 
-	<!-- 誰でもお気に入り可能 -->
-	<form th:action="@{'/favorite/add/' + ${recipe.id}}" method="post">
-	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-	    <button type="submit">お気に入り追加 💖</button>
-	</form>
+	
+	<!-- まだお気に入りじゃない -->
+	<div th:if="${isFavorite != null and !isFavorite}">
+	    <form th:action="@{'/favorite/add/' + ${recipe.id}}" method="post">
+	        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	        <button type="submit">お気に入り追加 💖</button>
+	    </form>
+	</div>
+
+	<!-- すでにお気に入り -->
+	<div th:if="${isFavorite}">
+	    <p>✅ すでにお気に入りに追加済みです！</p>
+	</div>
 	
     <a th:href="@{/}">一覧に戻る</a> 
 	<form th:action="@{/logout}" method="post">

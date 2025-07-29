@@ -54,4 +54,17 @@ public class FavoriteController {
         model.addAttribute("favorites", favorites);
         return "favorites"; // ← templates/favorites.html を表示
     }
+    
+    @GetMapping("/view/{id}")
+    public String viewRecipe(@PathVariable Long id, Principal principal, Model model) {
+        Recipe recipe = recipeRepository.findById(id).orElseThrow();
+        User user = userService.findByUsername(principal.getName());
+        
+        boolean isFavorite = favoriteRepository.existsByUserAndRecipe(user, recipe); // ← 追加
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("loginUsername", user.getUsername());
+        model.addAttribute("isFavorite", isFavorite); // ← 追加
+        
+        return "view";
+    }
 }

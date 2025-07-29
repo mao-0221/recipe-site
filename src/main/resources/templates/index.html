@@ -9,7 +9,8 @@
 
 	<ul>
 	  <li th:each="recipe : ${recipes}">
-	    <a th:href="@{'/view/' + ${recipe.id}}">
+		<!-- 修正後 -->
+		<a th:href="@{'/favorite/view/' + ${recipe.id}}">
 	      <strong th:text="${recipe.title}">タイトル</strong>
 	    </a><br>
 	    <span>投稿者：<span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span></span><br>
