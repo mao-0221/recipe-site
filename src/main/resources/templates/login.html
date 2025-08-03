@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ログイン</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
+  <div class="container">
     <h1>ログイン</h1>
 
     <form th:action="@{/login}" method="post">
@@ -21,5 +23,6 @@
     </form>
 
     <a th:href="@{/register}">新規登録</a>
+  </div>
 </body>
 </html>

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>レシピ投稿</title>
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 <body>
+  <div class="container">
     <h1>レシピ投稿フォーム</h1>
 
     <!-- 投稿と編集を自動で切り替える -->
@@ -12,11 +14,11 @@
         <label>タイトル：</label><br>
         <input type="text" th:field="*{title}" required><br>
 
-		<label>材料：</label><br>
-		<textarea th:field="*{ingredients}" required></textarea><br>
+        <label>材料：</label><br>
+        <textarea th:field="*{ingredients}" required></textarea><br>
 
-		<label>作り方：</label><br>
-		<textarea th:field="*{instructions}" required></textarea><br>
+        <label>作り方：</label><br>
+        <textarea th:field="*{instructions}" required></textarea><br>
 
         <label>評価（1〜5）：</label><br>
         <input type="number" th:field="*{rating}" min="1" max="5" required><br><br>
@@ -25,5 +27,6 @@
     </form>
 
     <a th:href="@{/}">戻る</a>
+  </div>
 </body>
 </html>

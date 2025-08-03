@@ -1,8 +1,20 @@
-<h1>お気に入りレシピ一覧 🧡</h1>
-<ul>
-  <li th:each="fav : ${favorites}">
-    <a th:href="@{'/view/' + ${fav.recipe.id}}">
-      <span th:text="${fav.recipe.title}">タイトル</span>
-    </a>
-  </li>
-</ul>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>お気に入りレシピ一覧</title>
+    <link rel="stylesheet" th:href="@{/css/favorites.css}">
+</head>
+<body>
+  <div class="container">
+    <h1>お気に入りレシピ一覧 🧡</h1>
+    <ul>
+      <li th:each="fav : ${favorites}">
+        <a th:href="@{'/view/' + ${fav.recipe.id}}">
+          <span th:text="${fav.recipe.title}">タイトル</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

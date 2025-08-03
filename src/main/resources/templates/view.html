@@ -3,51 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${recipe.title}">レシピ詳細</title>
+    <link rel="stylesheet" th:href="@{/css/view.css}">
 </head>
 <body>
+  <div class="container">
     <h1 th:text="${recipe.title}">タイトル</h1>
 
     <p><strong>材料：</strong> <pre th:text="${recipe.ingredients}">材料</pre></p>
     <p><strong>作り方：</strong> <pre th:text="${recipe.instructions}">作り方</pre></p>
     <p><strong>評価：</strong> <span th:text="${recipe.rating}">評価</span></p>
     <p><strong>投稿者：</strong> <span th:text="${recipe.user != null ? recipe.user.username : '不明'}"></span></p>
-	<p>ログインユーザー名: <span th:text="${loginUsername != null ? loginUsername : '未ログイン'}"></span></p>
-	<p>レシピ投稿者名: [[${recipe.user.username}]]</p>
-	
-	
-	<!-- 編集・削除は自分だけ -->
-	<div th:if="${loginUsername != null and recipe.user != null and loginUsername == recipe.user.username}">
-	    <a th:href="@{/edit/{id}(id=${recipe.id})}">編集</a>
-	    <a th:href="@{/delete/{id}(id=${recipe.id})}" onclick="return confirm('削除しますか？')">削除</a>
-	</div>
+    <p>ログインユーザー名: <span th:text="${loginUsername != null ? loginUsername : '未ログイン'}"></span></p>
+    <p>レシピ投稿者名: [[${recipe.user.username}]]</p>
 
-	
-	<!-- まだお気に入りじゃない -->
-	<div th:if="${isFavorite != null and !isFavorite}">
-	    <form th:action="@{'/favorite/add/' + ${recipe.id}}" method="post">
-	        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-	        <button type="submit">お気に入り追加 💖</button>
-	    </form>
-	</div>
+    <!-- 編集・削除は自分だけ -->
+    <div th:if="${loginUsername != null and recipe.user != null and loginUsername == recipe.user.username}">
+        <a th:href="@{/edit/{id}(id=${recipe.id})}">編集</a>
+        <a th:href="@{/delete/{id}(id=${recipe.id})}" onclick="return confirm('削除しますか？')">削除</a>
+    </div>
 
-	<!-- すでにお気に入り -->
-	<div th:if="${isFavorite}">
-	    <p>✅ すでにお気に入りに追加済みです！</p>
-	</div>
-	
-	<!-- お気に入り済みの場合 → 解除ボタンだけ表示したいとき -->
-	<div th:if="${isFavorite}">
-	    <form th:action="@{'/favorite/remove/' + ${recipe.id}}" method="post">
-	        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-	        <button type="submit">お気に入り解除 💔</button>
-	    </form>
-	</div>
-	
+    <!-- まだお気に入りじゃない -->
+    <div th:if="${isFavorite != null and !isFavorite}">
+        <form th:action="@{'/favorite/add/' + ${recipe.id}}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">お気に入り追加 💖</button>
+        </form>
+    </div>
+
+    <!-- すでにお気に入り -->
+    <div th:if="${isFavorite}">
+        <p>✅ すでにお気に入りに追加済みです！</p>
+    </div>
+
+    <!-- お気に入り済みの場合 → 解除ボタンだけ表示したいとき -->
+    <div th:if="${isFavorite}">
+        <form th:action="@{'/favorite/remove/' + ${recipe.id}}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">お気に入り解除 💔</button>
+        </form>
+    </div>
+
     <a th:href="@{/}">一覧に戻る</a> 
-	<form th:action="@{/logout}" method="post">
-	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-	    <button type="submit">ログアウト</button>
-	</form>
-
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">ログアウト</button>
+    </form>
+  </div>
 </body>
 </html>
